@@ -1,0 +1,5 @@
+Discord VPN Manager is an independent personal app.
+WireGuard Android tunnel library: Copyright WireGuard LLC. Apache License 2.0.
+https://git.zx2c4.com/wireguard-android/
+AndroidX: Copyright The Android Open Source Project. Apache License 2.0.
+No Discord or Proton affiliation.

@@ -1,0 +1,19 @@
+plugins { id 'com.android.application' }
+def signingProps = new Properties()
+if (rootProject.file('signing.properties').exists()) rootProject.file('signing.properties').withInputStream { signingProps.load(it) }
+android {
+ signingConfigs { release { if (signingProps.storePassword) { storeFile rootProject.file('keystore/discord-vpn.jks'); storePassword signingProps.storePassword; keyAlias 'discordvpn'; keyPassword signingProps.keyPassword } } }
+ namespace 'com.discordvpn.manager'
+ compileSdk 35
+ defaultConfig { applicationId 'com.discordvpn.manager'; minSdk 26; targetSdk 35; versionCode 1; versionName '1.0.0'; testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner' }
+ compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17; coreLibraryDesugaringEnabled true }
+ buildTypes { release { minifyEnabled false; if (signingProps.storePassword) signingConfig signingConfigs.release } }
+ packaging { resources { excludes += ['META-INF/DEPENDENCIES', 'META-INF/LICENSE*', 'META-INF/NOTICE*'] } }
+}
+dependencies {
+ implementation 'com.wireguard.android:tunnel:1.0.20260102'
+ coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
+ testImplementation 'junit:junit:4.13.2'
+ androidTestImplementation 'androidx.test:runner:1.6.2'
+ androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+}
